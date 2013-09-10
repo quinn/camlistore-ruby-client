@@ -13,6 +13,22 @@ module Camlistore
     end
 
     api_method :enumerate_blobs, 'camli/enumerate-blobs'
+
+    def each_blob &block
+      data = enumerate_blobs
+      blobs = data.blobs
+
+      while blobs.any?
+        blobs.each &block
+
+        blobs = if data.continueAfter.present?
+          data = enumerate_blobs(after: data.continueAfter)
+          data.blobs
+        else
+          []
+        end
+      end
+    end
   end
 
 end
