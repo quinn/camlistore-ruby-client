@@ -6,12 +6,12 @@ module Camlistore
     def connection
       @connection ||= Faraday.new(config.bshost) do |conn|
         conn.response :mashify
-        conn.response :json
+        conn.response :json, content_type: 'text/javascript'
         conn.adapter Faraday.default_adapter
       end
     end
 
-    def api_call key, url, params
+    def api_call url, params = {}
       response = connection.get(url, params)
 
       data = response.body
@@ -30,7 +30,7 @@ module Camlistore
     module ClassMethods
       def api_method key, url, &block
         define_method key do |params = {}|
-          api_call key, url, params, &block
+          api_call url, params, &block
         end
       end
     end

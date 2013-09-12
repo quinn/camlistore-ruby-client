@@ -29,6 +29,10 @@ module Camlistore
         end
       end
     end
+
+    def get sha
+      api_call('camli/' + sha)
+    end
   end
 
 end
