@@ -4,7 +4,7 @@ module Camlistore
     extend ActiveSupport::Concern
 
     def connection
-      @connection ||= Faraday.new(config.bshost) do |conn|
+      @connection ||= Faraday.new(config.host) do |conn|
         conn.response :mashify
         conn.response :json, content_type: 'text/javascript'
         conn.adapter Faraday.default_adapter

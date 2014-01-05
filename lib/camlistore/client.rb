@@ -1,6 +1,6 @@
 module Camlistore
   Configuration.namespace :camlistore
-  Configuration.keys :bshost
+  Configuration.keys :host
   Configuration.env ENV
 
   class Client
@@ -8,11 +8,11 @@ module Camlistore
     include API
 
     def initialize options = {}
-      @config = Configuration.new(options, bshost: 'http://localhost:3179/bs/')
-      raise ArgumentError, "You must supply blobstore host." unless config.bshost.present?
+      @config = Configuration.new(options, host: 'http://localhost:3179/')
+      raise ArgumentError, "You must supply blobstore host." unless config.host.present?
     end
 
-    api_method :enumerate_blobs, 'camli/enumerate-blobs'
+    api_method :enumerate_blobs, 'bs/camli/enumerate-blobs'
 
     def each_blob &block
       data = enumerate_blobs
@@ -31,7 +31,7 @@ module Camlistore
     end
 
     def get sha
-      api_call('camli/' + sha)
+      api_call('bs/camli/' + sha)
     end
   end
 
