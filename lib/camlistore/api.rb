@@ -11,8 +11,8 @@ module Camlistore
       end
     end
 
-    def api_call url, params = {}
-      response = connection.get(url, params) do |conn|
+    def api_call url, params = {}, headers = {}
+      response = connection.get(url, params, headers) do |conn|
         yield(conn) if block_given?
       end
 
