@@ -12,7 +12,9 @@ module Camlistore
     end
 
     def api_call url, params = {}
-      response = connection.get(url, params)
+      response = connection.get(url, params) do |conn|
+        yield(conn) if block_given?
+      end
 
       data = response.body
 
