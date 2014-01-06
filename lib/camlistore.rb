@@ -5,6 +5,7 @@ require 'active_support/core_ext/object/blank'
 require 'active_support/core_ext/array/wrap'
 require 'active_support/core_ext/string/inflections'
 require 'active_support/concern'
+require 'json'
 
 module Camlistore
   autoload :Configuration, 'camlistore/configuration'
