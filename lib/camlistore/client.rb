@@ -10,7 +10,7 @@ module Camlistore
     def initialize options = {}
       @config = Configuration.new(options, host: 'http://localhost:3179/')
       raise ArgumentError, "You must supply blobstore host." unless config.host.present?
-      remote_configuration = api_call '/', {}, {:accept => 'text/x-camli-configuration'}
+      remote_configuration = api_call '/', {}, {accept: 'text/x-camli-configuration'}
       @blobroot = remote_configuration['blobRoot']
       @searchroot = remote_configuration['searchRoot']
     end
