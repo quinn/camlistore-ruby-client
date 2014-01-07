@@ -29,6 +29,24 @@ module Camlistore
       end
     end
 
+    def api_post url, params = {}, headers = {}
+      response = connection.post(url, params, headers) do |conn|
+        yield(conn) if block_given?
+      end
+
+      data = response.body
+
+      # Camlistore doesn't seem to give errors?
+      # error_message = data.error_message
+      # raise ArgumentError, error_message if error_message
+
+      if block_given?
+        yield data
+      else
+        data
+      end
+    end
+
     module ClassMethods
       def api_method key, url, &block
         define_method key do |params = {}|
