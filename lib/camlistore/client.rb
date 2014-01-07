@@ -40,6 +40,11 @@ module Camlistore
     def describe sha
       api_call(@searchroot + 'camli/search/describe', {'blobref' => sha})
     end
+
+    def search query
+      query = query.to_json if query.is_a?(Hash)
+      api_post(@searchroot + 'camli/search/query', query)
+    end
   end
 
 end
