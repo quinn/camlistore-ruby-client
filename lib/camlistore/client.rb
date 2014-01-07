@@ -38,7 +38,7 @@ module Camlistore
     end
 
     def describe sha
-      api_call(@searchroot + 'camli/search/describe', {'blobref' => blobref})
+      api_call(@searchroot + 'camli/search/describe', {'blobref' => sha})
     end
   end
 
