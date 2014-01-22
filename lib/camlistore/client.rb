@@ -33,6 +33,10 @@ module Camlistore
       end
     end
 
+    def blobref content
+      'sha1-' + Digest::SHA1.hexdigest(content)
+    end
+
     def get sha
       api_call(@blobroot + 'camli/' + sha)
     end
@@ -44,6 +48,21 @@ module Camlistore
     def search query
       query = query.to_json if query.is_a?(Hash)
       api_post(@searchroot + 'camli/search/query', query)
+    end
+
+    def put content
+      sha = blobref(content)
+      boundary = 'randomboundaryXYZ'
+      content_type = "multipart/form-data; boundary=#{boundary}"
+
+post_body = "--#{boundary}
+Content-Disposition: form-data; name='#{sha}'; filename='#{sha}'
+Content-Type: application/octet-stream
+
+#{content}
+--#{boundary}--"
+
+      api_post(@blobroot + 'camli/upload', post_body, {:content_type => content_type})
     end
   end
 
