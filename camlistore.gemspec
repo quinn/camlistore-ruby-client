@@ -16,6 +16,7 @@ Gem::Specification.new do |gem|
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ['lib']
+  gem.add_runtime_dependency 'hashie'
   gem.add_runtime_dependency 'faraday_middleware', '~> 0.9.0'
   gem.add_runtime_dependency 'activesupport', '>= 4.0.0'
 end
